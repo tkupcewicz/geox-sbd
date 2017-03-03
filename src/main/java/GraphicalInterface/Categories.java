@@ -1,4 +1,4 @@
-package GUI;
+package GraphicalInterface;
 
 /**
  * Created by Tymek on 27.02.2017.
