@@ -25,6 +25,7 @@ public class RegisterWindow extends Window {
     private JPanel outerPanel;
     private JTextField firstField;
     private JTextField secondField;
+    private JButton cancelButton;
 
     static RegisterWindow getInstance() {
         if (instance == null){
@@ -62,6 +63,13 @@ public class RegisterWindow extends Window {
                 }
 
 
+            }
+        });
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getInstance().getjFrame().setVisible(false);
+                getInstance().getjFrame().dispose();
             }
         });
     }

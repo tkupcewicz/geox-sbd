@@ -5,6 +5,7 @@ import General.ProductsHandler;
 import General.UserHandler;
 import Objects.Product;
 import Objects.User;
+import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,17 +33,18 @@ public class MainWindow extends TableWindow {
     private JButton logoutButton;
     private JButton manageButton;
     private JPanel loggedPanel;
-    private static String[] tableColumnNames = {"Tytuł", "Gatunek", "Cena"};
+    private static String[] tableColumnNames = {"Title", "Genre", "Price"};
 
     private User activeUser;
 
 
     public MainWindow() {
         super();
-        this.createWindow("Sklep Muzyczny", this.panel1, 900, 450);
+        this.createWindow("Music Store", this.panel1, 900, 450);
         this.loggedPanel.setVisible(false);
         this.setTableModel(this.productsTable, tableColumnNames);
         this.activeUser = null;
+        this.manageButton.setVisible(false);
 
         try {
             this.setProductRows(ProductsHandler.getInstance().getAllProducts()
@@ -62,20 +64,32 @@ public class MainWindow extends TableWindow {
                         String.valueOf(MainWindow.this.passwordField1.getPassword()))){
                     MainWindow.this.loginPanel.setVisible(false);
                     MainWindow.this.loggedPanel.setVisible(true);
-
                     MainWindow.this.activeUser = UserHandler.getInstance().getUser(loginField.getText());
-
+                    if(activeUser.getManager()) MainWindow.this.manageButton.setVisible(true);
+                    loginField.setText("");
+                    passwordField1.setText("");
                 }
                 else{
                     JOptionPane.showMessageDialog(panel1, "Login or password is incorrect.",
                             "Warning", JOptionPane.WARNING_MESSAGE);
+                    passwordField1.setText("");
                 }
             }
         });
-        registerButton.addActionListener(new ActionListener() {
+
+        this.registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new RegisterWindow();
+            }
+        });
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainWindow.this.activeUser = null;
+                MainWindow.this.loginPanel.setVisible(true);
+                MainWindow.this.loggedPanel.setVisible(false);
+                MainWindow.this.manageButton.setVisible(false);
             }
         });
     }
