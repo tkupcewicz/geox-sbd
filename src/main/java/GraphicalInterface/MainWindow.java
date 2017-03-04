@@ -8,8 +8,9 @@ import Objects.User;
 import sun.applet.Main;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,29 +93,16 @@ public class MainWindow extends TableWindow {
                 MainWindow.this.manageButton.setVisible(false);
             }
         });
+        productsTable.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent evnt) {
+                if (evnt.getClickCount() == 2) {
+                    System.out.println(productsTable.getValueAt(productsTable.getSelectedRow(), 0).toString());
+                    new ProductWindow();
+                }
+            }
+        });
     }
 
-
-    public void getPlyty() {
-
-        String SQL = "SELECT title, genre, img FROM products";
-
-    try (Connection conn = PostgresDB.getInstance().connect();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(SQL)) {
-        displayPlyty(rs);
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
-    }
-}
-
-    private void displayPlyty(ResultSet rs) throws SQLException {
-        while (rs.next()) {
-            System.out.println(rs.getString("title") + "\t"
-                    + rs.getString("genre") + "\t"
-                    + rs.getString("img"));
-        }
-    }
 
     public static void main(String[] args) {
         MainWindow mainWindow = new MainWindow();
