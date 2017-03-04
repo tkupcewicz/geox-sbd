@@ -8,6 +8,12 @@ import java.awt.*;
  */
 public class Window {
 
+    private JFrame jFrame;
+
+    public JFrame getjFrame() {
+        return this.jFrame;
+    }
+
     public void createWindow(String name, JPanel jPanel, int minSize, int maxSize){
         JFrame frame = new JFrame(name);
         frame.setContentPane(jPanel);
@@ -15,5 +21,6 @@ public class Window {
         frame.setMinimumSize(new Dimension(minSize, maxSize));
         frame.pack();
         frame.setVisible(true);
+        this.jFrame = frame;
     }
 }

@@ -1,10 +1,9 @@
 package Database;
 
+import General.ResultSetStorage;
 import javafx.geometry.Pos;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by Tymek on 03.03.2017.
@@ -16,8 +15,10 @@ public class PostgresDB {
     private final String user = "Tymek";
     private final String password = "haslo";
 
-    public PostgresDB(){
+    private Connection connection;
 
+    public PostgresDB(){
+        this.connection = this.connect();
     }
 
     public static PostgresDB getInstance(){
@@ -38,4 +39,23 @@ public class PostgresDB {
 
         return conn;
     }
+
+    public ResultSetStorage select(String query){
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            return new ResultSetStorage(resultSet);
+        } catch (SQLException e) {
+            System.out.println("Couldn't process query: " + query);
+        }
+        return null;
+    }
+
+    public boolean insert(String query) throws SQLException {
+        Statement statement = this.connection.createStatement();
+        statement.execute(this.connection.nativeSQL(query));
+        statement.close();
+        return true;
+    }
+
 }

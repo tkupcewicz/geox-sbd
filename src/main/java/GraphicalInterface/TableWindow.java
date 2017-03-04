@@ -24,6 +24,7 @@ public class TableWindow extends Window {
         table.setModel(model);
         table.setAutoCreateRowSorter(true);
         table.setFillsViewportHeight(true);
+        table.setDefaultEditor(Object.class, null);
     }
 
     void addRow(Object[] row){
@@ -36,6 +37,12 @@ public class TableWindow extends Window {
 
         for (Object[] row : rows){
             addRow(row);
+        }
+    }
+
+    void setProductRows(ArrayList<Object[]> rows){
+        for (Object[] row : rows){
+            addRow(new Object[]{row[1], row[2], row[4]});
         }
     }
 
