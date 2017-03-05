@@ -66,6 +66,7 @@ public class MainWindow extends TableWindow {
         }
 
         ArrayList<Categories> lista_kategorii = new ArrayList<Categories>(Arrays.asList(Categories.values()));
+
         this.categoriesList.setListData(lista_kategorii.toArray());
 
         this.loginButton.addActionListener(new ActionListener() {
@@ -105,12 +106,20 @@ public class MainWindow extends TableWindow {
         productsTable.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evnt) {
                 if (evnt.getClickCount() == 2) {
-                    System.out.println(productsTable.getValueAt(productsTable.getSelectedRow(), 0).toString());
+//                    System.out.println(productsTable.getValueAt(productsTable.getSelectedRow(), 0).toString());
 //                    new ProductWindow((Integer) productsTable.getValueAt(productsTable.getSelectedRow(), 0));
                     ProductWindow.getInstance();
                     ProductWindow.getInstance().updateProductWindow(
                             (Integer) productsTable.getValueAt(productsTable.getSelectedRow(), 0)
                     );
+                }
+            }
+        });
+        categoriesList.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent evnt) {
+                if (evnt.getClickCount() == 2) {
+//                    System.out.println(categoriesList.getSelectedValue().toString());
+                    updateTable((Categories) categoriesList.getSelectedValue());
                 }
             }
         });
@@ -122,6 +131,13 @@ public class MainWindow extends TableWindow {
 
     public static void main(String[] args) {
         MainWindow.getInstance();
+    }
+
+    private void updateTable(Categories cat) {
+        this.setRows(ProductsHandler.getInstance().filterProducts(cat)
+                .stream()
+                .map(Product::toObject)
+                .collect(Collectors.toCollection(ArrayList::new)));
     }
 
 }
