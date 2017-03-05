@@ -34,10 +34,18 @@ public class MainWindow extends TableWindow {
     private JButton logoutButton;
     private JButton manageButton;
     private JPanel loggedPanel;
-    private static String[] tableColumnNames = {"Title", "Genre", "Price"};
+    private static String[] tableColumnNames = {"Id", "Title", "Genre", "Price"};
 
     private User activeUser;
 
+    private static MainWindow instance = new MainWindow();
+
+    static MainWindow getInstance() {
+        if (instance == null){
+            instance = new MainWindow();
+        }
+        return instance;
+    }
 
     public MainWindow() {
         super();
@@ -46,6 +54,7 @@ public class MainWindow extends TableWindow {
         this.setTableModel(this.productsTable, tableColumnNames);
         this.activeUser = null;
         this.manageButton.setVisible(false);
+
 
         try {
             this.setProductRows(ProductsHandler.getInstance().getAllProducts()
@@ -81,7 +90,7 @@ public class MainWindow extends TableWindow {
         this.registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new RegisterWindow();
+                RegisterWindow.getInstance();
             }
         });
         logoutButton.addActionListener(new ActionListener() {
@@ -97,15 +106,22 @@ public class MainWindow extends TableWindow {
             public void mouseClicked(MouseEvent evnt) {
                 if (evnt.getClickCount() == 2) {
                     System.out.println(productsTable.getValueAt(productsTable.getSelectedRow(), 0).toString());
-                    new ProductWindow();
+//                    new ProductWindow((Integer) productsTable.getValueAt(productsTable.getSelectedRow(), 0));
+                    ProductWindow.getInstance();
+                    ProductWindow.getInstance().updateProductWindow(
+                            (Integer) productsTable.getValueAt(productsTable.getSelectedRow(), 0)
+                    );
                 }
             }
         });
     }
 
+    public User getActiveUser() {
+        return this.activeUser;
+    }
 
     public static void main(String[] args) {
-        MainWindow mainWindow = new MainWindow();
+        MainWindow.getInstance();
     }
 
 }

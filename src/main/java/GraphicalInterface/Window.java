@@ -14,11 +14,11 @@ public class Window {
         return this.jFrame;
     }
 
-    public void createWindow(String name, JPanel jPanel, int minSize, int maxSize){
+    public void createWindow(String name, JPanel jPanel, int width, int height){
         JFrame frame = new JFrame(name);
         frame.setContentPane(jPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(minSize, maxSize));
+        frame.setMinimumSize(new Dimension(width, height));
         frame.pack();
         frame.setVisible(true);
         this.jFrame = frame;

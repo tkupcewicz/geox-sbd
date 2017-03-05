@@ -34,7 +34,37 @@ public class Product {
                 this.price, this.publisher, this.image_url, this.quantity};
     }
 
+    public int getId() {
+        return this.id;
+    }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public Categories getGenre() {
+        return this.genre;
+    }
+
+    public Date getDate() {
+        return this.date;
+    }
+
+    public String getPrice() {
+        return this.price;
+    }
+
+    public String getPublisher() {
+        return this.publisher;
+    }
+
+    public String getImage_url() {
+        return this.image_url;
+    }
+
+    public int getQuantity() {
+        return this.quantity;
+    }
 }
 
 

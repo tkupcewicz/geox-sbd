@@ -1,5 +1,6 @@
 package Database;
 
+import Objects.Review;
 import Objects.User;
 
 /**
@@ -26,4 +27,16 @@ public class Query {
         return String.format("SELECT * FROM users WHERE login = '%s';", login);
     }
 
+    public static String getProduct(int id){
+        return String.format("SELECT * FROM products WHERE id = '%d';", id);
+    }
+
+    public static String getProductReviews(int id){
+        return String.format("SELECT * FROM reviews WHERE product_id = '%d' ORDER BY reviews.date;", id);
+    }
+
+    public static String addReviews(Review review){
+        return String.format("INSERT INTO reviews (date, content, product_id, \"user\") VALUES ('%s', '%s', '%s', '%s');",
+                review.getDate(), review.getContent(), review.getProductId(), review.getUserLogin());
+    }
 }

@@ -31,6 +31,7 @@ public class RegisterWindow extends Window {
         if (instance == null){
             instance = new RegisterWindow();
         }
+        instance.getjFrame().toFront();
         return instance;
     }
 
@@ -50,6 +51,7 @@ public class RegisterWindow extends Window {
                     if(ret){
                         getInstance().getjFrame().setVisible(false);
                         getInstance().getjFrame().dispose();
+                        instance = null;
                     }
                     else{
                         JOptionPane.showMessageDialog(outerPanel, "That login is already taken.",
@@ -70,6 +72,7 @@ public class RegisterWindow extends Window {
             public void actionPerformed(ActionEvent e) {
                 getInstance().getjFrame().setVisible(false);
                 getInstance().getjFrame().dispose();
+                instance = null;
             }
         });
     }

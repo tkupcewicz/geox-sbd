@@ -42,7 +42,7 @@ public class TableWindow extends Window {
 
     void setProductRows(ArrayList<Object[]> rows){
         for (Object[] row : rows){
-            addRow(new Object[]{row[1], row[2], row[4]});
+            addRow(new Object[]{row[0], row[1], row[2], row[4]});
         }
     }
 

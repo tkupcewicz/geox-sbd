@@ -29,4 +29,8 @@ public class ProductsHandler {
         this.products = this.productDao.getAllProducts();
         return products;
     }
+
+    public Product getProduct(int id){
+        return this.productDao.getProduct(id);
+    }
 }
