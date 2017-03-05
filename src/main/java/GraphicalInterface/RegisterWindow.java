@@ -1,6 +1,6 @@
 package GraphicalInterface;
 
-import General.UserHandler;
+import Handlers.UserHandler;
 import Objects.User;
 
 import javax.swing.*;

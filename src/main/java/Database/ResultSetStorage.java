@@ -1,4 +1,4 @@
-package General;
+package Database;
 
 import java.sql.ResultSet;
 

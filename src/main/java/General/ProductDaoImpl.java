@@ -27,7 +27,7 @@ public class ProductDaoImpl implements ProductDao {
                     Categories.valueOf(rs.getString("genre")),
                     rs.getDate("date"),
                     rs.getString("price"),
-                    rs.getString("publisher"),
+                    rs.getString("artist"),
                     rs.getString("img"),
                     rs.getInt("quantity")
             ));
@@ -48,7 +48,7 @@ public class ProductDaoImpl implements ProductDao {
                         Categories.valueOf(rs.getString("genre")),
                         rs.getDate("date"),
                         rs.getString("price"),
-                        rs.getString("publisher"),
+                        rs.getString("artist"),
                         rs.getString("img"),
                         rs.getInt("quantity")
                 );

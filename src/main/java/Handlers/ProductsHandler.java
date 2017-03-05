@@ -1,5 +1,6 @@
-package General;
+package Handlers;
 
+import General.ProductDaoImpl;
 import GraphicalInterface.Categories;
 import Interfaces.ProductDao;
 import Objects.Product;

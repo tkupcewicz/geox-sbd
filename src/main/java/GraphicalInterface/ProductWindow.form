@@ -193,7 +193,9 @@
             <children>
               <component id="e9cf1" class="javax.swing.JEditorPane" binding="reviewsPane">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <editable value="false"/>
+                </properties>
               </component>
             </children>
           </scrollpane>

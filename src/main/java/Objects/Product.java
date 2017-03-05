@@ -13,25 +13,25 @@ public class Product {
     private Categories genre;
     private Date date;
     private String price;
-    private String publisher;
+    private String artist;
     private String image_url;
     private int quantity;
 
     public Product(int id, String name, Categories genre, Date date,
-                   String price, String publisher, String image_url, int quantity) {
+                   String price, String artist, String image_url, int quantity) {
         this.id = id;
         this.name = name;
         this.genre = genre;
         this.date = date;
         this.price = price;
-        this.publisher = publisher;
+        this.artist = artist;
         this.image_url = image_url;
         this.quantity = quantity;
     }
 
     public Object[] toObject(){
         return new Object[]{this.id, this.name, this.genre, this.date,
-                this.price, this.publisher, this.image_url, this.quantity};
+                this.price, this.artist, this.image_url, this.quantity};
     }
 
     public int getId() {
@@ -54,8 +54,8 @@ public class Product {
         return this.price;
     }
 
-    public String getPublisher() {
-        return this.publisher;
+    public String getArtist() {
+        return this.artist;
     }
 
     public String getImage_url() {

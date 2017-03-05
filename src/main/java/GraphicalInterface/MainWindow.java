@@ -1,15 +1,11 @@
 package GraphicalInterface;
 
-import Database.PostgresDB;
-import General.ProductsHandler;
-import General.UserHandler;
+import Handlers.ProductsHandler;
+import Handlers.UserHandler;
 import Objects.Product;
 import Objects.User;
-import sun.applet.Main;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,25 +1,18 @@
 package GraphicalInterface;
 
-import General.ProductsHandler;
-import General.ReviewHandler;
+import Handlers.ProductsHandler;
+import Handlers.ReviewHandler;
 import Objects.Product;
 import Objects.Review;
-import sun.applet.Main;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.time.LocalDate;
 
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -103,7 +96,7 @@ public class ProductWindow extends Window{
             activeProduct = ProductsHandler.getInstance().getProduct(id);
         }
         this.titleLabel.setText(activeProduct.getName());
-        this.authorLabel.setText(activeProduct.getPublisher());
+        this.authorLabel.setText(activeProduct.getArtist());
         this.genreLabel.setText(String.valueOf(activeProduct.getGenre()));
         this.dateLabel.setText(String.valueOf(activeProduct.getDate()));
         this.quantityLabel.setText(String.valueOf(activeProduct.getQuantity()));
