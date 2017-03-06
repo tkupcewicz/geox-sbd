@@ -55,4 +55,11 @@ public class PostgresDB {
         return true;
     }
 
+    public boolean update(String query) throws SQLException {
+        Statement statement = this.connection.createStatement();
+        statement.executeUpdate(this.connection.nativeSQL(query));
+        statement.close();
+        return true;
+    }
+
 }

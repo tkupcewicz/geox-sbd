@@ -39,4 +39,11 @@ public class Query {
         return String.format("INSERT INTO reviews (date, content, product_id, \"user\") VALUES ('%s', '%s', '%s', '%s');",
                 review.getDate(), review.getContent(), review.getProductId(), review.getUserLogin());
     }
+
+    public static String updateUser(String email, String fName, String sName, String addr,
+                                    String postal, String phone, String login) {
+        return String.format("UPDATE users SET email='%s', first_name='%s', second_name='%s'," +
+                        " address='%s', postal_code='%s', phone_number='%s' WHERE login='%s'", email, fName, sName, addr,
+                postal, phone, login);
+    }
 }

@@ -4,9 +4,12 @@ import Handlers.ProductsHandler;
 import Handlers.ReviewHandler;
 import Objects.Product;
 import Objects.Review;
+import sun.applet.Main;
 
+import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -49,16 +52,14 @@ public class ProductWindow extends Window{
         instance.getjFrame().toFront();
         return instance;
     }
-//        TODO: rysowanie obrazkow
-//        produkt view powinien miec przypisany dany produkt, cos jak aktual user dla mainwindow
-//        jesli product window wywoluje manager to kazde pole zamiast labela to field juz wypelniony i przycisk update
+//        TODO:
 //        dodawanie do zamowienia, pewnie trzeba bedzie cos wymyslic zeby zamowienie mialo status zlozone/niezlozone itd
-//        Ustawic na sztywno rozmiar okna
 
 
     ProductWindow(){
         instance = this;
         this.createWindow("Product view", this.outerPanel, 330, 600);
+        this.getjFrame().setMaximumSize(new Dimension(330, 10000));
 
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -79,6 +80,12 @@ public class ProductWindow extends Window{
                 instance.updateProductWindow(activeProduct.getId());
             }
 
+        });
+        orderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainWindow.getInstance().addProductToCart(activeProduct.getId());
+            }
         });
     }
 
@@ -113,9 +120,8 @@ public class ProductWindow extends Window{
         java.awt.Image image = java.awt.Toolkit.getDefaultToolkit().createImage(url);
         this.imgLabel.setIcon(new ImageIcon(image));
 
-
-
-
-
     }
+
+
+
 }

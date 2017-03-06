@@ -23,4 +23,12 @@ public class Window {
         frame.setVisible(true);
         this.jFrame = frame;
     }
+
+    public void updateWindow(JPanel jPanel){
+        JFrame frame = this.getjFrame();
+        frame.setContentPane(jPanel);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
 }

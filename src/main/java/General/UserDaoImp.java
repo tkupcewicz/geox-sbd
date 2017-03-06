@@ -28,8 +28,17 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public void updateUser(User user) {
-
+    public Boolean updateUser(String email, String fName, String sName, String addr,
+                           String postal, String phone, String login) {
+        String query = Query.updateUser(email, fName, sName, addr, postal, phone, login);
+        System.out.println(query);
+        try {
+            PostgresDB.getInstance().update(query);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

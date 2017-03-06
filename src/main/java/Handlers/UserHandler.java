@@ -31,4 +31,10 @@ public class UserHandler {
     public Boolean registerUser(User user){
         return userDao.registerUser(user);
     }
+
+    public Boolean updateUser(String email, String fName, String sName, String addr,
+                              String postal, String phone, String login){
+        return userDao.updateUser(email, fName, sName, addr, postal, phone, login);
+    }
+
 }

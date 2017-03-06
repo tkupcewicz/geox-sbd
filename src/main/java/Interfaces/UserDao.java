@@ -8,9 +8,10 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
  */
 public interface UserDao {
     public Boolean verifyUser(String login, String Password);
-    public void updateUser(User user);
+    public Boolean updateUser(String email, String fName, String sName, String addr, String postal, String phone, String login);
     public void deleteUser(User user);
     public User getUser(String login);
     public Boolean registerUser(User user);
+
 
 }

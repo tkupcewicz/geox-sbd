@@ -9,6 +9,7 @@ import java.util.ArrayList;
  */
 public class TableWindow extends Window {
     private DefaultTableModel tableModel;
+    private DefaultTableModel tableModel2;
 
 
 
@@ -44,6 +45,14 @@ public class TableWindow extends Window {
         for (Object[] row : rows){
             addRow(new Object[]{row[0], row[1], row[2], row[4]});
         }
+    }
+
+    void clearProductRows(){
+        int rowCount = this.tableModel.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            this.tableModel.removeRow(i);
+        }
+        this.tableModel.setRowCount(0);
     }
 
 }

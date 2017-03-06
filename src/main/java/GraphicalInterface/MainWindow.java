@@ -33,6 +33,7 @@ public class MainWindow extends TableWindow {
     private static String[] tableColumnNames = {"Id", "Title", "Genre", "Price"};
 
     private User activeUser;
+    private ArrayList<Product> cartList;
 
     private static MainWindow instance = new MainWindow();
 
@@ -72,6 +73,8 @@ public class MainWindow extends TableWindow {
                     MainWindow.this.loginPanel.setVisible(false);
                     MainWindow.this.loggedPanel.setVisible(true);
                     MainWindow.this.activeUser = UserHandler.getInstance().getUser(loginField.getText());
+                    MainWindow.this.cartList = new ArrayList<Product>();
+
                     if(activeUser.getManager()) MainWindow.this.manageButton.setVisible(true);
                     loginField.setText("");
                     passwordField1.setText("");
@@ -93,6 +96,7 @@ public class MainWindow extends TableWindow {
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                clearCartList();
                 MainWindow.this.activeUser = null;
                 MainWindow.this.loginPanel.setVisible(true);
                 MainWindow.this.loggedPanel.setVisible(false);
@@ -119,6 +123,12 @@ public class MainWindow extends TableWindow {
                 }
             }
         });
+        myAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UserWindow.getInstance();
+            }
+        });
     }
 
     public User getActiveUser() {
@@ -136,4 +146,23 @@ public class MainWindow extends TableWindow {
                 .collect(Collectors.toCollection(ArrayList::new)));
     }
 
+    public void setActiveUser(User user){
+        this.activeUser = user;
+    }
+
+    public void clearCartList(){
+        this.cartList.clear();
+    }
+
+    public void addProductToCart(int id){
+        cartList.add(ProductsHandler.getInstance().getProduct(id));
+    }
+
+    public ArrayList<Product> getCartList(){
+        return cartList;
+    }
+
+    public static String[] getTableColumnNames() {
+        return MainWindow.tableColumnNames;
+    }
 }
