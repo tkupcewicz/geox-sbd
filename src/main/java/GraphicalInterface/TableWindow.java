@@ -28,6 +28,21 @@ public class TableWindow extends Window {
         table.setDefaultEditor(Object.class, null);
     }
 
+    void setTableModel2(JTable table, String[] colNames){
+        DefaultTableModel model = new DefaultTableModel();
+        System.out.println(colNames);
+        for (String name : colNames) {
+            model.addColumn(name);
+        }
+
+        this.tableModel2 = model;
+
+        table.setModel(model);
+        table.setAutoCreateRowSorter(true);
+        table.setFillsViewportHeight(true);
+        table.setDefaultEditor(Object.class, null);
+    }
+
     void addRow(Object[] row){
         this.tableModel.addRow(row);
     }
@@ -41,6 +56,26 @@ public class TableWindow extends Window {
         }
     }
 
+    void addRow2(Object[] row){
+        this.tableModel2.addRow(row);
+    }
+
+    void setRows2(ArrayList<Object[]> rows){
+
+        this.tableModel2.setRowCount(0);
+
+        for (Object[] row : rows){
+            addRow2(row);
+        }
+    }
+
+    void setOrderRows(ArrayList<Object[]> rows){
+        for (Object[] row : rows){
+            addRow2(new Object[]{row[0], row[1], row[2]});
+        }
+    }
+
+
     void setProductRows(ArrayList<Object[]> rows){
         for (Object[] row : rows){
             addRow(new Object[]{row[0], row[1], row[2], row[4]});
@@ -53,6 +88,14 @@ public class TableWindow extends Window {
             this.tableModel.removeRow(i);
         }
         this.tableModel.setRowCount(0);
+    }
+
+    void updateProductsTable(){
+        tableModel.fireTableDataChanged();
+    }
+
+    void updateOrdersTable(){
+        tableModel2.fireTableDataChanged();
     }
 
 }

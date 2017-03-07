@@ -7,6 +7,8 @@ import Objects.Review;
 import sun.applet.Main;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ public class ProductWindow extends Window{
     ProductWindow(){
         instance = this;
         this.createWindow("Product view", this.outerPanel, 330, 600);
-        this.getjFrame().setMaximumSize(new Dimension(330, 10000));
+//        this.getjFrame().setMaximumSize(new Dimension(330, 10000));
 
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -84,7 +86,24 @@ public class ProductWindow extends Window{
         orderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainWindow.getInstance().addProductToCart(activeProduct.getId());
+//
+                for(int i  = 0; i < Integer.parseInt(orderField.getText()); i++) {
+                    MainWindow.getInstance().addProductToCart(activeProduct.getId());
+                }
+                JOptionPane.showMessageDialog(outerPanel, "Added products to cart." +
+                                " Products in cart are not reserved, can still be bought by other customers.",
+                        "Warning", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+        });
+        orderField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                char c = e.getKeyChar();
+                if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))){
+                    e.consume();
+                }
             }
         });
     }

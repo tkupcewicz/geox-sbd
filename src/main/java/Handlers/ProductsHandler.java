@@ -26,7 +26,6 @@ public class ProductsHandler {
 
     private ProductsHandler() {
         this.productDao = new ProductDaoImpl();
-
     }
 
     public ArrayList<Product> getAllProducts() throws SQLException {
@@ -43,5 +42,18 @@ public class ProductsHandler {
 
     public Product getProduct(int id){
         return this.productDao.getProduct(id);
+    }
+
+    public Boolean reduceProductAmount(int id){
+        return this.productDao.reduceQuantity(id);
+    }
+
+    public Boolean createProduct(String title, String genre, String date,
+                                 String artist, String imgURL, int quantity, String price){
+        return this.productDao.createProduct(title, genre, date, artist, imgURL, quantity, price);
+    }
+
+    public Boolean createArtist(String name, String date, String desc){
+        return this.productDao.createArtist(name, date, desc);
     }
 }

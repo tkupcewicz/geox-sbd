@@ -65,6 +65,10 @@ public class Product {
     public int getQuantity() {
         return this.quantity;
     }
+
+    public String toString(){
+        return String.format("Id: %s, Name: %s, Price: %s", this.id, this.name, this.price);
+    }
 }
 
 

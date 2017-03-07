@@ -68,4 +68,40 @@ public class ProductDaoImpl implements ProductDao {
     public void deleteProduct(Product product) {
 
     }
+
+    @Override
+    public Boolean reduceQuantity(int id) {
+        String query = Query.reduceAmountOfProduct(id);
+        try {
+            PostgresDB.getInstance().update(query);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean createProduct(String title, String genre, String date, String artist, String imgURL, int quantity, String price) {
+        String query = Query.createProduct(title, genre, date, artist, imgURL, quantity, price);
+        try {
+            PostgresDB.getInstance().insert(query);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean createArtist(String name, String date, String desc) {
+        String query = Query.createArtist(name, date, desc);
+        try {
+            PostgresDB.getInstance().insert(query);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

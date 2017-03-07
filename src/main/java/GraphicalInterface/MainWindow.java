@@ -1,16 +1,23 @@
 package GraphicalInterface;
 
+import Handlers.OrderHandler;
 import Handlers.ProductsHandler;
 import Handlers.UserHandler;
+import Objects.Order;
 import Objects.Product;
 import Objects.User;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static jdk.nashorn.internal.objects.NativeMath.round;
 
 
 /**
@@ -31,6 +38,7 @@ public class MainWindow extends TableWindow {
     private JButton manageButton;
     private JPanel loggedPanel;
     private static String[] tableColumnNames = {"Id", "Title", "Genre", "Price"};
+    private static String[] orderColumnNames = {"Number", "Date", "Value"};
 
     private User activeUser;
     private ArrayList<Product> cartList;
@@ -129,6 +137,12 @@ public class MainWindow extends TableWindow {
                 UserWindow.getInstance();
             }
         });
+        manageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ManageWindow.getInstance();
+            }
+        });
     }
 
     public User getActiveUser() {
@@ -165,4 +179,24 @@ public class MainWindow extends TableWindow {
     public static String[] getTableColumnNames() {
         return MainWindow.tableColumnNames;
     }
+
+    public static String[] getOrderColumnNames() {
+        return MainWindow.orderColumnNames;
+    }
+
+    public String getCartSum(){
+        double sum = 0.0f;
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+//        formatter.format
+        for(int i = 0; i < cartList.size(); i++){
+            sum += Double.parseDouble(cartList.get(i).getPrice().replaceAll(",",".").substring(3));
+        }
+        String ret = String.valueOf((double) Math.round(sum * 100) / 100);
+        return ret.replaceAll("\\.",",");
+    }
+
+    // TODO:
+//    2. dodac okno manage store, dodawanie artystow, plyt, zmiana statusu zamowien
+//    3. dodac obsluge ilosci produktow
+//    4. Obejsc czyszczenie tabeli koszyka i update zamowien poprzez zamykanie okna po wykonaniu transakcji z koszykiem
 }

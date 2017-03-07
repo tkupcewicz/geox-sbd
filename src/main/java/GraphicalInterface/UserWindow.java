@@ -1,7 +1,9 @@
 package GraphicalInterface;
 
+import Handlers.OrderHandler;
 import Handlers.ProductsHandler;
 import Handlers.UserHandler;
+import Objects.Order;
 import Objects.Product;
 import Objects.User;
 import sun.applet.Main;
@@ -9,6 +11,9 @@ import sun.applet.Main;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -36,6 +41,9 @@ public class UserWindow extends TableWindow {
 
     private static UserWindow instance = new UserWindow();
 
+
+
+
     static UserWindow getInstance() {
         if (instance == null){
             instance = new UserWindow();
@@ -48,8 +56,14 @@ public class UserWindow extends TableWindow {
         instance = this;
         loadUser();
         this.setTableModel(this.cartTable, MainWindow.getTableColumnNames());
-        updateCartTable();
+        this.setTableModel2(this.ordersTable, MainWindow.getOrderColumnNames());
+        this.updateCartTable();
         this.createWindow("My account", this.outerPanel, 600, 400);
+
+        this.setOrderRows(OrderHandler.getInstance().getUserOrders(MainWindow.getInstance().getActiveUser().getLogin())
+                .stream()
+                .map(Order::toObject)
+                .collect(Collectors.toCollection(ArrayList::new)));
 
         closeButton.addActionListener(new ActionListener() {
             @Override
@@ -114,7 +128,56 @@ public class UserWindow extends TableWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainWindow.getInstance().clearCartList();
-                getInstance().updateCartTable();
+                cartTable.repaint();
+                JOptionPane.showMessageDialog(outerPanel, "Canceled cart successfully.",
+                        "Information", JOptionPane.INFORMATION_MESSAGE);
+                instance.closeWindow();
+            }
+        });
+        orderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Boolean isCreated;
+                ArrayList<Product> notAdded = new ArrayList<>();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                java.util.Date date = new java.util.Date();
+                Order order = new Order(-1, dateFormat.format(date), MainWindow.getInstance().getCartSum(),
+                        MainWindow.getInstance().getActiveUser().getLogin());
+                int orderId = OrderHandler.getInstance().createOrder(order);
+                if(orderId == -1){
+                    JOptionPane.showMessageDialog(outerPanel, "Something went wrong, couldn't create order.",
+                            "Warning", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    for(int i = 0; i < MainWindow.getInstance().getCartList().size(); i++){
+                        Product product = MainWindow.getInstance().getCartList().get(i);
+                        if(ProductsHandler.getInstance().reduceProductAmount(product.getId())){
+                            OrderHandler.getInstance().createProductOnOrder(orderId, product.getId(), product.getPrice());
+                        }
+                        else{
+                            notAdded.add(product);
+                        }
+                    }
+                    if(notAdded.size() > 0){
+                        String canceledProducts = "";
+                        for(int k = 0; k < notAdded.size(); k++){
+                            MainWindow.getInstance().getCartList().remove(notAdded.get(k));
+                            canceledProducts += notAdded.get(k).toString() + "\n";
+                        }
+                        JOptionPane.showMessageDialog(outerPanel, "Some product were removed from" +
+                                        " order because they're out of stock: \n" + canceledProducts,
+                                "Warning", JOptionPane.ERROR_MESSAGE);
+
+                    }
+                    if(MainWindow.getInstance().getCartList().size() > 0){
+                        JOptionPane.showMessageDialog(outerPanel, "Successfully created order. No: " + orderId);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(outerPanel, "Cannot create order with empty cart.");
+                    }
+                    OrderHandler.getInstance().updateOrderValue(orderId, MainWindow.getInstance().getCartSum());
+                    MainWindow.getInstance().clearCartList();
+                }
             }
         });
     }
